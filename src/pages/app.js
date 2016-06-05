@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Layout, Boxs} from '../../components'
+import {Layout} from '../../components'
 const {Header, Siedbar, Container, Breadcrumb} = Layout;
-const {box} = Boxs;
+
 
 const menus=[
     {id:1,name:'首页',link:'/index',childs:[]},

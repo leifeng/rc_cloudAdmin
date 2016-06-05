@@ -8,7 +8,9 @@ const menus = [
         id: 2, link: '', name: '其他', childs: [
             { id: 3, link: '/map', name: '地图' },
             { id: 4, link: '/map2', name: '地图2' },
-            { id: 5, link: '/curd', name: '增删改' }
+            { id: 5, link: '/curd', name: '增删改' },
+            { id: 6, link: '/charts', name: 'charts' }
+
         ]
     }
 ]
@@ -33,7 +35,7 @@ export default class Index extends Component {
         )
     }
     componentDidMount() {
-        handleGoToTop();      
+        handleGoToTop();
         jQuery(window).resize(() => {
             clearTimeout(this.t);
             this.t = setTimeout(function () {

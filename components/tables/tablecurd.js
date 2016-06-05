@@ -1,8 +1,9 @@
 
+import 'rc-dialog/assets/bootstrap.css';
 import React, {Component} from 'react';
 import Table from 'rc-table';
 import Pager from '../paginations/pager'
-
+import Dialog from 'rc-dialog';
 const columns = [
     { title: 'id', dataIndex: 'id', key: 'id', width: 10 },
     { title: 'code', dataIndex: 'code', key: 'code' },
@@ -26,6 +27,7 @@ class TableCurd extends Component {
     constructor() {
         super();
         this.state = {
+            visible: false,
             total: 0,
             pageSize: 10,
             pageNo: 1,
@@ -34,12 +36,21 @@ class TableCurd extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
         this.onPageChange = this.onPageChange.bind(this);
+        this.onAdd = this.onAdd.bind(this);
     }
     render() {
         return (
             <div>
+                <Dialog  visible={this.state.visible}
+                    animation="slide-fade"
+                    maskAnimation="fade"
+                    onClose={this.onClose}
+                    style={{ width: 600 }}
+                    title={<div>第二个弹框</div>}>
+                    sssssss
+                </Dialog>
                 <div className="well well-sm">
-                    <form className="form-horizontal">
+                    <div className="form-horizontal">
                         <div className="form-group ">
                             <div className="col-md-3 col-sm-6">
                                 <label className="control-label col-md-5 col-xs-12" >aa
@@ -73,32 +84,21 @@ class TableCurd extends Component {
 
                         <div className="form-group" style={{ marginBottom: 0 }}>
                             <div className="col-lg-3 col-md-4 col-lg-offset-9 col-md-offset-8 btn-toolbar text-right">
-                                <button className="btn btn-primary"><i className="fa fa-plus"></i> 添加</button>
+                                <button className="btn btn-primary" onClick={this.onAdd}><i className="fa fa-plus"></i> 添加</button>
                                 <button className="btn btn-info "><i className="fa fa-search"></i> 查询</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <Table columns={columns}
                     data={this.state.data}
                     tableClassName="table table-striped table-bordered"/>
-                <div className="row">
-                    <div className=" col-md-2">
-                        <select className="form-control input-sm" onChange={this.onSelectChange} value={this.state.pageSize}>
-                            <option value="10">10条/页</option>
-                            <option value="20">20条/页</option>
-                            <option value="30">30条/页</option>
-                        </select>
-                    </div>
-                    <div className=" col-md-10">
-                        <Pager
-                            total={this.state.total}
-                            pageSize={this.state.pageSize}
-                            current={this.state.pageNo}
-                            onChange={this.onPageChange}/>
-
-                    </div>
-                </div>
+                <Pager
+                    total={this.state.total}
+                    pageSize={this.state.pageSize}
+                    current={this.state.pageNo}
+                    onChange={this.onPageChange}
+                    onSelectChange={this.onSelectChange}/>
 
             </div>
         );
@@ -106,7 +106,16 @@ class TableCurd extends Component {
     componentDidMount() {
         this.onGetData(1);
     }
+    onSubmit(e) {
+        console.log('aaa')
+        e.preventDefault();
+    }
+    onClose() {
 
+    }
+    onAdd() {
+        this.setState({ visible: true })
+    }
     onPageChange(pageNum) {
         this.onGetData(pageNum);
     }
@@ -118,10 +127,10 @@ class TableCurd extends Component {
     }
     onGetData(pageNum) {
         const {url} = this.props;
-        this.setState({pageNum:pageNum});
+        this.setState({ pageNum: pageNum });
         $.ajax({
             url: url,
-            data: { isPaging: true,pageNum:pageNum },
+            data: { isPaging: true, pageNum: pageNum },
             dataType: 'json',
             success: (data) => {
                 const list = data.list;

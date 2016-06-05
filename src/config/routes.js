@@ -23,6 +23,12 @@ const Curd = (location, cb) => {
     cb(null, require('../pages/curd').default)
   })
 }
+const ChartsPage = (location, cb) => {
+  console.log(Location)
+  require.ensure([], require => {
+    cb(null, require('../pages/charts').default)
+  })
+}
 const NoMatch = () => {
   return (
     <div>404</div>
@@ -38,6 +44,7 @@ const Routes = () => {
         <Route path="map" getComponent={Baimap} name="地图"/>
         <Route path="map2" getComponent={Map2} name="地图2"/>
         <Route path="curd" getComponent={Curd} name="列表"/>
+        <Route path="charts" getComponent={ChartsPage} name="列表"/>
       </Route>
       <Route path="*" component={NoMatch}/>
     </Router>

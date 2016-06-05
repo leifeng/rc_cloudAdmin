@@ -39,6 +39,7 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "chart.js": "^2.1.4",
     "rc-dialog": "^6.0.8",
     "rc-pagination": "^1.5.3",
     "rc-table": "^4.1.1"
